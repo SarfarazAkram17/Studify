@@ -6,7 +6,49 @@ import { toast } from "react-toastify";
 import SocialLogin from "../../Shared/SocialLogin/SocialLogin";
 
 const Register = () => {
+  const { createUser, updateUserProfile } =
+    useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const photo = formData.get("photo");
+    const password = formData.get("password");
+
+    const uppercaseRegex = /(?=.*[A-Z])/;
+    const lowercaseRegex = /(?=.*[a-z])/;
+    const lengthRegex = /.{6,}/;
+
+    if (!uppercaseRegex.test(password)) {
+      toast.error("Password should have at least one uppercase");
+      return;
+    }
+    if (!lowercaseRegex.test(password)) {
+      toast.error("Password should have at least one lowercase");
+      return;
+    }
+    if (!lengthRegex.test(password)) {
+      toast.error("Password should have at least 6 characters or longer");
+      return;
+    }
+
+    createUser(email, password)
+      .then((users) => {
+        toast.success("You registered successfully");
+        updateUserProfile(name, photo)
+          .catch((error) => toast.error(error.code));
+        navigate(location.state || "/");
+        form.reset();
+        console.log(users)
+      })
+      .catch((error) => toast.error(error.code));
+  };
 
  
 
@@ -19,6 +61,7 @@ const Register = () => {
             <label className="label font-semibold">Name</label>
             <input
               type="text"
+              required
               className="input mb-4 text-lg placeholder:text-[15px] placeholder:font-bold rancho"
               name="name"
               placeholder="Enter your Name"
@@ -26,6 +69,7 @@ const Register = () => {
             <label className="label font-semibold">Email</label>
             <input
               type="email"
+              required
               className="input mb-4 text-lg placeholder:text-[15px] placeholder:font-bold rancho"
               name="email"
               placeholder="Enter your Email"
@@ -33,6 +77,7 @@ const Register = () => {
             <label className="label font-semibold">Photo URL</label>
             <input
               type="text"
+              required
               className="input mb-4 text-lg placeholder:text-[15px] placeholder:font-bold rancho"
               name="photo"
               placeholder="Enter your Photo Url"
@@ -43,6 +88,7 @@ const Register = () => {
                 type={showPassword ? "text" : "password"}
                 className="input text-lg placeholder:text-[15px] placeholder:font-bold rancho"
                 name="password"
+                required
                 placeholder="Enter your password"
               />
               {showPassword ? (
@@ -72,7 +118,7 @@ const Register = () => {
             </p>
           </form>
             <div className="divider my-4">OR</div>
-            <SocialLogin></SocialLogin>
+            <SocialLogin state={location.state} message={'You registered successfully'}></SocialLogin>
         </div>
       </div>
     </div>

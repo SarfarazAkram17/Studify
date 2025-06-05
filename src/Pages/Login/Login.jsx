@@ -6,7 +6,27 @@ import { toast } from "react-toastify";
 import SocialLogin from "../../Shared/SocialLogin/SocialLogin";
 
 const Login = () => {
+  const location = useLocation()
+  const navigate = useNavigate()
+  const { loginUser } = useContext(AuthContext);
+  const [showPassword, setShowPassword] = useState(false);
 
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+
+    const email = formData.get("email");
+    const password = formData.get("password");
+
+    loginUser(email, password)
+      .then(() => {
+        toast.success("You logged in successfully");
+        form.reset();
+        navigate(location.state || '/')
+      })
+      .catch((error) => toast.error(error.code));
+  };
   return (
     <div className="px-4">
       <div className="card bg-base-100 w-full max-w-sm mx-auto my-12 shrink-0 shadow-2xl">
@@ -55,7 +75,7 @@ const Login = () => {
             </p>
           </form>
             <div className="divider my-4">OR</div>
-            <SocialLogin></SocialLogin>
+            <SocialLogin state={location.state} message={'You logged in successfully'}></SocialLogin>
         </div>
       </div>
     </div>

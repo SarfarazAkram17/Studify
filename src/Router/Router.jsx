@@ -3,6 +3,7 @@ import MainLayout from "../Layouts/MainLayout";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
+import PrivateRouter from "./PrivateRouter";
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +22,14 @@ export const router = createBrowserRouter([
         path: "/register",
         Component: Register,
       },
+      {
+        path: "/assignments",
+        element: <p>still cooking</p>,
+      },
+      // {
+      //   path: "/pendingAssignments",
+      //   element: <PrivateRouter></PrivateRouter>
+      // },
     ],
   },
 ]);
