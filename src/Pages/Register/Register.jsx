@@ -3,60 +3,12 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../../Authentication/AuthContext";
 import { toast } from "react-toastify";
+import SocialLogin from "../../Shared/SocialLogin/SocialLogin";
 
 const Register = () => {
-  const { createUser, googleLogin, updateUserProfile } =
-    useContext(AuthContext);
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
 
-  const handleRegister = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const formData = new FormData(form);
-    const name = formData.get("name");
-    const email = formData.get("email");
-    const photo = formData.get("photo");
-    const password = formData.get("password");
 
-    const uppercaseRegex = /(?=.*[A-Z])/;
-    const lowercaseRegex = /(?=.*[a-z])/;
-    const lengthRegex = /.{6,}/;
-
-    if (!uppercaseRegex.test(password)) {
-      toast.error("Password should have at least one uppercase");
-      return;
-    }
-    if (!lowercaseRegex.test(password)) {
-      toast.error("Password should have at least one lowercase");
-      return;
-    }
-    if (!lengthRegex.test(password)) {
-      toast.error("Password should have at least 6 characters or longer");
-      return;
-    }
-
-    createUser(email, password)
-      .then(() => {
-        toast.success("You registered successfully");
-        updateUserProfile(name, photo)
-          .then(() => {})
-          .catch((error) => toast.error(error.code));
-        navigate(location.state || "/");
-        form.reset();
-      })
-      .catch((error) => toast.error(error.code));
-  };
-
-  const handleGoogleLogin = () => {
-    googleLogin()
-      .then(() => {
-        navigate(location.state || "/");
-        toast.success("You registered successfully");
-      })
-      .catch((error) => toast.error(error.code));
-  };
+ 
 
   return (
     <div className="px-4">
@@ -120,6 +72,7 @@ const Register = () => {
             </p>
           </form>
             <div className="divider my-4">OR</div>
+            <SocialLogin></SocialLogin>
         </div>
       </div>
     </div>
