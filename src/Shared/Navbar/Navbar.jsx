@@ -1,9 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../Authentication/AuthContext";
+import { Tooltip } from "react-tooltip";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logOutUser } = useContext(AuthContext);
   const [theme, setTheme] = useState("light");
   const [themeLoaded, setThemeLoaded] = useState(false);
 
@@ -37,7 +39,10 @@ const Navbar = () => {
       </NavLink>
 
       {user && (
-        <NavLink className="m-1 px-2 py-1 font-semibold" to="/pendingAssignments">
+        <NavLink
+          className="m-1 px-2 py-1 font-semibold"
+          to="/pendingAssignments"
+        >
           Pending Assignments
         </NavLink>
       )}
@@ -46,14 +51,28 @@ const Navbar = () => {
 
   const profileLinks = (
     <>
-      <NavLink className="m-1 px-2 py-1 text-xs font-semibold" to="/createAssignments">
+      <NavLink
+        className="m-1 px-2 py-1 text-xs font-semibold"
+        to="/createAssignments"
+      >
         Create Assignments
       </NavLink>
-      <NavLink className="m-1 px-2 py-1 text-xs font-semibold" to="/myAttemptedAssignments">
+      <NavLink
+        className="m-1 px-2 py-1 text-xs font-semibold"
+        to="/myAttemptedAssignments"
+      >
         My Attempted Assignments
       </NavLink>
     </>
   );
+
+  const handleLogout = () => {
+    logOutUser()
+      .then(() => {
+        toast.warning("You logout successfully");
+      })
+      .catch((error) => toast.error(error.code));
+  };
 
   return (
     <div className="navbar bg-base-100 px-8">
@@ -203,20 +222,28 @@ const Navbar = () => {
         </div>
 
         {user ? (
-          <div className="dropdown dropdown-bottom dropdown-end">
-            <div tabIndex={0} role="button">
-              <img
-                src={user.photoURL}
-                alt="profile"
-                className="rounded-full w-11 h-11 cursor-pointer"
-              />
+          <div className="flex items-center gap-2">
+            <div className="dropdown dropdown-bottom dropdown-end">
+              <div tabIndex={0} role="button">
+                <img
+                  src={user.photoURL}
+                  alt="profile"
+                  data-tooltip-id="my-tooltip"
+                  data-tooltip-content={user.displayName}
+                  className="rounded-full w-12 h-12 cursor-pointer"
+                />
+                <Tooltip id="my-tooltip" />
+              </div>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content bg-base-100 w-52 rounded-box z-10 mt-3 text-center shadow"
+              >
+                {profileLinks}
+              </ul>
             </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 w-52 rounded-box z-10 mt-3 text-center shadow"
-            >
-              {profileLinks}
-            </ul>
+            <button onClick={handleLogout} className="btn btn-error text-xl">
+              Log Out
+            </button>
           </div>
         ) : (
           <div className="flex gap-2 items-center">
