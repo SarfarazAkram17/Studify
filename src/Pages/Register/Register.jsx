@@ -6,8 +6,7 @@ import { toast } from "react-toastify";
 import SocialLogin from "../../Shared/SocialLogin/SocialLogin";
 
 const Register = () => {
-  const { createUser, updateUserProfile } =
-    useContext(AuthContext);
+  const { createUser, updateUserProfile } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -41,16 +40,15 @@ const Register = () => {
     createUser(email, password)
       .then((users) => {
         toast.success("You registered successfully");
-        updateUserProfile(name, photo)
-          .catch((error) => toast.error(error.code));
+        updateUserProfile(name, photo).catch((error) =>
+          toast.error(error.code)
+        );
         navigate(location.state || "/");
         form.reset();
-        console.log(users)
+        console.log(users);
       })
       .catch((error) => toast.error(error.code));
   };
-
- 
 
   return (
     <div className="px-4">
@@ -117,8 +115,11 @@ const Register = () => {
               </Link>
             </p>
           </form>
-            <div className="divider my-4">OR</div>
-            <SocialLogin state={location.state} message={'You registered successfully'}></SocialLogin>
+          <div className="divider my-4">OR</div>
+          <SocialLogin
+            state={location.state}
+            message={"You registered successfully"}
+          ></SocialLogin>
         </div>
       </div>
     </div>

@@ -36,6 +36,7 @@ const Login = () => {
             <label className="label font-semibold">Email</label>
             <input
               type="email"
+              required
               className="input mb-4 text-lg placeholder:text-[15px] placeholder:font-bold rancho"
               name="email"
               placeholder="Enter your email"
@@ -46,6 +47,7 @@ const Login = () => {
                 type={showPassword ? "text" : "password"}
                 className="input text-lg placeholder:text-[15px] placeholder:font-bold rancho"
                 name="password"
+                required
                 placeholder="Enter your password"
               />
               {showPassword ? (

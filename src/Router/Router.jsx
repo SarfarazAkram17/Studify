@@ -26,10 +26,30 @@ export const router = createBrowserRouter([
         path: "/assignments",
         element: <p>still cooking</p>,
       },
-      // {
-      //   path: "/pendingAssignments",
-      //   element: <PrivateRouter></PrivateRouter>
-      // },
+      {
+        path: "/pendingAssignments",
+        element: (
+          <PrivateRouter>
+            <p>cooking</p>
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/createAssignments",
+        element: (
+          <PrivateRouter>
+            <p>cooking</p>
+          </PrivateRouter>
+        ),
+      },
+      {
+        path: "/myAttemptedAssignments",
+        element: (
+          <PrivateRouter>
+            <p>cooking</p>
+          </PrivateRouter>
+        ),
+      },
     ],
   },
 ]);

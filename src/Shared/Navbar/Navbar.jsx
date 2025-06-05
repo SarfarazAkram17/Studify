@@ -36,16 +36,27 @@ const Navbar = () => {
         Assignments
       </NavLink>
 
-{
-    user &&       <NavLink className="m-1 px-2 py-1 font-semibold" to="/pendingAssignments">
-        Pending Assignments
+      {user && (
+        <NavLink className="m-1 px-2 py-1 font-semibold" to="/pendingAssignments">
+          Pending Assignments
+        </NavLink>
+      )}
+    </>
+  );
+
+  const profileLinks = (
+    <>
+      <NavLink className="m-1 px-2 py-1 text-xs font-semibold" to="/createAssignments">
+        Create Assignments
       </NavLink>
-}
+      <NavLink className="m-1 px-2 py-1 text-xs font-semibold" to="/myAttemptedAssignments">
+        My Attempted Assignments
+      </NavLink>
     </>
   );
 
   return (
-    <div className="navbar bg-base-100 px-6">
+    <div className="navbar bg-base-100 px-8">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -66,7 +77,7 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-40 text-center p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-48 text-center p-2 shadow"
           >
             {links}
             <div className="flex justify-center my-2 md:hidden">
@@ -191,15 +202,32 @@ const Navbar = () => {
           )}
         </div>
 
+        {user ? (
+          <div className="dropdown dropdown-bottom dropdown-end">
+            <div tabIndex={0} role="button">
+              <img
+                src={user.photoURL}
+                alt="profile"
+                className="rounded-full w-11 h-11 cursor-pointer"
+              />
+            </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-base-100 w-52 rounded-box z-10 mt-3 text-center shadow"
+            >
+              {profileLinks}
+            </ul>
+          </div>
+        ) : (
           <div className="flex gap-2 items-center">
             <Link to="/login">
-              <button className="btn btn-info text-xl">Login</button>
+              <button className="btn btn-success text-xl">Login</button>
             </Link>
             <Link to="/register" className="hidden lg:block">
-              <button className="btn btn-info text-xl">Register</button>
+              <button className="btn btn-success text-xl">Register</button>
             </Link>
           </div>
-     
+        )}
       </div>
     </div>
   );

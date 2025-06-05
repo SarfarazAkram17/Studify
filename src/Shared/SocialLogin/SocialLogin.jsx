@@ -13,7 +13,7 @@ const SocialLogin = ({ state, message }) => {
         navigate(state || "/");
         toast.success(message);
       })
-      .catch((error) => toast.error(error.message));
+      .catch((error) => toast.error(error.code));
   };
   return (
     <button
