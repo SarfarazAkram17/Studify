@@ -150,7 +150,7 @@ const Navbar = () => {
             </div>
             {!user && (
               <Link to="/register" className="lg:hidden block my-2">
-                <button className="btn btn-info text-xl">Register</button>
+                <button className="btn btn-accent text-xl">Register</button>
               </Link>
             )}
           </ul>
@@ -248,10 +248,10 @@ const Navbar = () => {
         ) : (
           <div className="flex gap-2 items-center">
             <Link to="/login">
-              <button className="btn btn-success text-xl">Login</button>
+              <button className="btn btn-accent text-xl">Login</button>
             </Link>
             <Link to="/register" className="hidden lg:block">
-              <button className="btn btn-success text-xl">Register</button>
+              <button className="btn btn-accent text-xl">Register</button>
             </Link>
           </div>
         )}
