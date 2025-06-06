@@ -10,7 +10,6 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white py-8 px-4 sm:px-6 lg:px-8 mt-12">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-      
         <div className="space-y-3">
           <div className="flex items-center gap-4">
             <img
@@ -42,7 +41,8 @@ const Footer = () => {
             </a>
           </p>
           <p className="text-sm leading-5">
-            <strong>Address:</strong> 123 Study Lane, Suite 100, Knowledge City, Remote State, USA
+            <strong>Address:</strong> 123 Study Lane, Suite 100, Knowledge City,
+            Remote State, USA
           </p>
         </div>
 
@@ -125,24 +125,29 @@ const Footer = () => {
 
         <div>
           <h3 className="text-2xl font-bold mb-3">Stay Updated</h3>
-          <p className="text-sm mb-3">
-            Subscribe for study tips and updates!
-          </p>
+          <p className="text-sm mb-3">Subscribe for study tips and updates!</p>
           <div className="flex flex-col sm:flex-row gap-2">
-            <input
-              type="email"
-              placeholder="Email address"
-              className="p-2 rounded-md text-sm bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
-              aria-label="Email for newsletter subscription"
-              required
-            />
-            <button
-              type="button"
-              className="py-1 px-2 text-lg btn btn-info font-bold"
-              onClick={() => toast.success("Successfully subscribed!")}
+            <form
+              className="flex items-center"
+              onSubmit={(e) => {
+                e.preventDefault();
+                toast.success("Successfully subscribed!");
+                e.target.reset()
+              }}
             >
-              Subscribe
-            </button>
+              <input
+                type="email"
+                placeholder="Email address"
+                className="px-2 py-3 rounded-md text-sm bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-400"
+                aria-label="Email for newsletter subscription"
+                required
+              />
+              <input
+                type="submit"
+                className="py-1 px-2 text-lg btn btn-info font-bold rancho"
+                value="Subscribe"
+              />
+            </form>
           </div>
         </div>
       </div>
