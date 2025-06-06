@@ -148,7 +148,14 @@ const Navbar = () => {
                 </label>
               )}
             </div>
-            {!user && (
+            {user ? (
+              <button
+                onClick={handleLogout}
+                className="btn block lg:hidden btn-error text-xl my-2"
+              >
+                Log Out
+              </button>
+            ) : (
               <Link to="/register" className="lg:hidden block my-2">
                 <button className="btn btn-accent text-xl">Register</button>
               </Link>
@@ -241,7 +248,10 @@ const Navbar = () => {
                 {profileLinks}
               </ul>
             </div>
-            <button onClick={handleLogout} className="btn btn-error text-xl">
+            <button
+              onClick={handleLogout}
+              className="btn hidden lg:block btn-error text-xl"
+            >
               Log Out
             </button>
           </div>
