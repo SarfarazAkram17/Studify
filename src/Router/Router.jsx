@@ -5,6 +5,7 @@ import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import PrivateRouter from "./PrivateRouter";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
+import CreateAssignment from "../Pages/CreateAssignment/CreateAssignment";
 
 export const router = createBrowserRouter([
   {
@@ -39,7 +40,7 @@ export const router = createBrowserRouter([
         path: "/createAssignments",
         element: (
           <PrivateRouter>
-            <p>cooking</p>
+            <CreateAssignment></CreateAssignment>
           </PrivateRouter>
         ),
       },

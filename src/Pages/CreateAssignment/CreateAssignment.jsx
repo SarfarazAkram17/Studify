@@ -1,0 +1,149 @@
+import axios from "axios";
+import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { toast } from "react-toastify";
+
+const CreateAssignment = () => {
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [loading, setLoading] = useState(false);
+
+  const handleCreateAssignment = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const assignment = Object.fromEntries(formData.entries());
+
+    const formattedDate = selectedDate
+      .toLocaleDateString("en-GB") // en-GB = DD/MM/YYYY
+      .split("/")
+      .map((value) => value.padStart(2, "0")) // ensures 01 instead of 1
+      .join("/");
+
+    assignment.dueDate = formattedDate;
+    setLoading(true);
+
+    axios
+      .post("http://localhost:3000/assignments", assignment)
+      .then((res) => {
+        if (res.data.insertedId) {
+          toast.success("You created assignment successfully");
+          form.reset();
+          setSelectedDate(new Date());
+          setLoading(false);
+        }
+        console.log(res.data);
+      })
+      .catch((error) => toast.error(error.code));
+  };
+
+  return (
+    <div className="px-3">
+      <div className="max-w-5xl px-8 py-16 mx-auto rounded-lg my-12 bg-base-200">
+        <h1 className="text-center text-4xl md:text-5xl mb-8 font-bold">
+          Create Assignment
+        </h1>
+        <p className="max-w-2xl md:max-w-3xl leading-5 mx-auto text-center text-xs md:text-sm mb-12">
+          Welcome to the Create Assignment page! Here, you can easily create
+          study assignments for your friends and fellow learners. Simply fill in
+          the assignment title, description, marks, difficulty level, and due
+          date. Once submitted, your assignment will be visible to all users,
+          allowing them to view and attempt it. Be clear and detailed to help
+          others complete the task successfully!
+        </p>
+        <form onSubmit={handleCreateAssignment}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+            <fieldset className="fieldset">
+              <label className="label font-bold text-sm">
+                Assignment Title
+              </label>
+              <input
+                type="text"
+                name="title"
+                required
+                className="input w-full bg-base-100 placeholder:text-xs placeholder:font-semibold h-8"
+                placeholder="Enter Assignment Title"
+              />
+            </fieldset>
+
+            <fieldset className="fieldset">
+              <label className="label font-bold text-sm">Marks</label>
+              <input
+                type="number"
+                name="marks"
+                required
+                className="input w-full bg-base-100 placeholder:text-xs placeholder:font-semibold h-8"
+                placeholder="Enter Marks"
+              />
+            </fieldset>
+
+            <fieldset className="fieldset">
+              <label className="label font-bold text-sm">
+                Thumbnail Image URL
+              </label>
+              <input
+                type="url"
+                name="image"
+                required
+                className="input w-full bg-base-100 placeholder:text-xs placeholder:font-semibold h-8"
+                placeholder="Enter Thumbnail Image URL"
+              />
+            </fieldset>
+
+            <fieldset className="fieldset">
+              <label className="label font-bold text-sm">Difficulty</label>
+              <select
+                defaultValue=""
+                name="difficulty"
+                required
+                className="select w-full bg-base-100"
+              >
+                <option disabled value="">
+                  Choose difficulty
+                </option>
+                <option>Easy</option>
+                <option>Medium</option>
+                <option>Hard</option>
+              </select>
+            </fieldset>
+
+            <fieldset className="fieldset">
+              <label className="label font-bold text-sm">Due Date</label>
+              <DatePicker
+                selected={selectedDate}
+                onChange={(date) => setSelectedDate(date)}
+                className="input w-full bg-base-100 placeholder:text-xs placeholder:font-semibold h-8"
+                dateFormat="dd/MM/yyyy"
+                required
+              />
+            </fieldset>
+
+            <fieldset className="fieldset">
+              <label className="label font-bold text-sm">Description</label>
+              <input
+                type="text"
+                name="description"
+                required
+                className="input w-full bg-base-100 placeholder:text-xs placeholder:font-semibold h-8"
+                placeholder="Enter Description"
+              />
+            </fieldset>
+          </div>
+
+          <button
+            className="w-full btn mt-12 text-2xl md:text-3xl btn-info rounded-full"
+            disabled={loading}
+          >
+            {loading ? (
+              <span className="loading loading-spinner loading-md"></span>
+            ) : (
+              "Create Assignment"
+            )}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default CreateAssignment;

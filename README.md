@@ -18,3 +18,5 @@ tailwind
 daisy ui
 react tooltip
 framer motion
+axios
+react-datepicker
