@@ -8,7 +8,7 @@ const MainLayout = () => {
     return (
         <div className='xl:container mx-auto'>
             <Navbar></Navbar>
-            <div className='my-20'>
+            <div className='my-6'>
                 <Outlet></Outlet>
             </div>
             <Footer></Footer>
