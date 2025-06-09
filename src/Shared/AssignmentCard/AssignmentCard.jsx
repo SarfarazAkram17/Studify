@@ -6,11 +6,11 @@ const AssignmentCard = ({ assignment, handleAssignmentDelete }) => {
   const { _id, title, thumbnail_image, marks, difficulty, description } = assignment;
 
   return (
-    <div className="bg-base-300 rounded-2xl shadow-md p-4">
+    <div className="bg-base-300 rounded-xl shadow-md p-4">
       <img
         src={thumbnail_image}
         alt={title}
-        className="w-full h-52 md:h-48 lg:h-40 object-cover rounded-xl mb-4"
+        className="w-full h-52 md:h-48 lg:h-40 object-cover rounded-lg mb-4"
       />
       <h2 className="text-2xl font-semibold">{title}</h2>
       <p className="text-sm my-4 line-clamp-2">{description}</p>

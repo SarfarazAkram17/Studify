@@ -1,59 +1,81 @@
-import axios from "axios";
 import React, { useContext, useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { toast } from "react-toastify";
 import { AuthContext } from "../../Authentication/AuthContext";
+import { Link, useLoaderData } from "react-router";
+import DatePicker from "react-datepicker";
+import { BsArrowLeftCircleFill } from "react-icons/bs";
+import axios from "axios";
+import { toast } from "react-toastify";
 
-const CreateAssignment = () => {
+const UpdateAssignment = () => {
   const { userEmail } = useContext(AuthContext);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const assignment = useLoaderData();
+  const {
+    _id,
+    dueDate,
+    difficulty,
+    description,
+    thumbnail_image,
+    title,
+    creator_email,
+    marks,
+  } = assignment;
+
+  const [selectedDate, setSelectedDate] = useState(dueDate);
   const [loading, setLoading] = useState(false);
 
-  const handleCreateAssignment = (e) => {
+  const handleUpdateAssignment = (e) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    const assignment = Object.fromEntries(formData.entries());
-    assignment.dueDate = selectedDate;
-    setLoading(true);
+    const updatedAssignment = Object.fromEntries(formData.entries());
+    updatedAssignment.dueDate = selectedDate;
+
+    setLoading(true)
 
     axios
-      .post("http://localhost:3000/assignments", assignment)
+      .put(
+        `http://localhost:3000/assignments/${_id}?email=${userEmail}`,
+        updatedAssignment
+      )
       .then((res) => {
-        if (res.data.insertedId) {
-          toast.success("You created assignment successfully");
-          form.reset();
-          setSelectedDate(new Date());
-          setLoading(false);
+        if (res.data.modifiedCount) {
+          toast.success("You successfully update the assignment");
+        } else {
+          toast.error(res.data.message);
         }
+        setLoading(false)
       })
       .catch((error) => toast.error(error.code));
   };
 
   return (
     <div className="px-4">
+      <div className="my-8 max-w-5xl mx-auto">
+        <Link to={-1}>
+          <BsArrowLeftCircleFill size={25} />
+        </Link>
+      </div>
+
       <div className="max-w-5xl px-8 py-16 mx-auto rounded-lg my-12 bg-base-300">
         <h1 className="text-center text-4xl md:text-5xl mb-8 font-bold">
-          Create Assignment
+          Update Assignment
         </h1>
         <p className="max-w-2xl md:max-w-3xl leading-5 mx-auto text-center text-xs md:text-sm mb-12">
-          Welcome to the Create Assignment page! Here, you can easily create
-          study assignments for your friends and fellow learners. Simply fill in
-          the assignment title, description, marks, difficulty level, and due
-          date. Once submitted, your assignment will be visible to all users,
-          allowing them to view and attempt it. Be clear and detailed to help
-          others complete the task successfully!
+          You're now updating an existing assignment. You can change the title,
+          description, marks, difficulty level etc. Make sure the updated
+          information is clear and accurate so other users can continue to
+          benefit from this assignment. Once saved, your changes will be
+          reflected immediately for all users.
         </p>
-        <form onSubmit={handleCreateAssignment}>
+        <form onSubmit={handleUpdateAssignment}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
             <fieldset className="fieldset">
-              <label className="label font-bold text-sm">User Email</label>
+              <label className="label font-bold text-sm">Creator Email</label>
               <input
                 type="email"
                 name="creator_email"
                 readOnly
-                value={userEmail}
+                defaultValue={creator_email}
                 className="input w-full bg-base-100 placeholder:text-xs placeholder:font-semibold h-8"
                 placeholder="Enter Assignment Title"
               />
@@ -66,6 +88,7 @@ const CreateAssignment = () => {
               <input
                 type="text"
                 name="title"
+                defaultValue={title}
                 required
                 className="input w-full bg-base-100 placeholder:text-xs placeholder:font-semibold h-8"
                 placeholder="Enter Assignment Title"
@@ -77,6 +100,7 @@ const CreateAssignment = () => {
               <input
                 type="number"
                 name="marks"
+                defaultValue={marks}
                 required
                 className="input w-full bg-base-100 placeholder:text-xs placeholder:font-semibold h-8"
                 placeholder="Enter Marks"
@@ -90,6 +114,7 @@ const CreateAssignment = () => {
               <input
                 type="url"
                 name="thumbnail_image"
+                defaultValue={thumbnail_image}
                 required
                 className="input w-full bg-base-100 placeholder:text-xs placeholder:font-semibold h-8"
                 placeholder="Enter Thumbnail Image URL"
@@ -99,14 +124,11 @@ const CreateAssignment = () => {
             <fieldset className="fieldset">
               <label className="label font-bold text-sm">Difficulty</label>
               <select
-                defaultValue=""
+                defaultValue={difficulty}
                 name="difficulty"
                 required
                 className="select w-full bg-base-100"
               >
-                <option disabled value="">
-                  Choose difficulty
-                </option>
                 <option>Easy</option>
                 <option>Medium</option>
                 <option>Hard</option>
@@ -118,7 +140,7 @@ const CreateAssignment = () => {
               <DatePicker
                 selected={selectedDate}
                 onChange={(date) => setSelectedDate(date)}
-                className="input w-full bg-base-100 placeholder:text-xs placeholder:font-semibold h-8"
+                className="input w-full bg-base-100 h-8"
                 dateFormat="dd/MM/yyyy"
                 required
               />
@@ -129,6 +151,7 @@ const CreateAssignment = () => {
               <input
                 type="text"
                 name="description"
+                defaultValue={description}
                 required
                 className="input w-full bg-base-100 placeholder:text-xs placeholder:font-semibold h-8"
                 placeholder="Enter Description"
@@ -143,7 +166,7 @@ const CreateAssignment = () => {
             {loading ? (
               <span className="loading loading-spinner loading-md"></span>
             ) : (
-              "Create Assignment"
+              "Update Assignment"
             )}
           </button>
         </form>
@@ -152,4 +175,4 @@ const CreateAssignment = () => {
   );
 };
 
-export default CreateAssignment;
+export default UpdateAssignment;
