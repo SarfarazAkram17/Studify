@@ -6,6 +6,7 @@ import Register from "../Pages/Register/Register";
 import PrivateRouter from "./PrivateRouter";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import CreateAssignment from "../Pages/CreateAssignment/CreateAssignment";
+import Assignments from "../Pages/Assignments/Assignments";
 
 export const router = createBrowserRouter([
   {
@@ -26,7 +27,8 @@ export const router = createBrowserRouter([
       },
       {
         path: "/assignments",
-        element: <p>still cooking</p>,
+        loader: ()=>fetch('http://localhost:3000/assignments'),
+        Component: Assignments
       },
       {
         path: "/pendingAssignments",

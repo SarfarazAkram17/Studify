@@ -1,10 +1,12 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "react-toastify";
+import { AuthContext } from "../../Authentication/AuthContext";
 
 const CreateAssignment = () => {
+  const { user } = useContext(AuthContext);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [loading, setLoading] = useState(false);
 
@@ -32,7 +34,6 @@ const CreateAssignment = () => {
           setSelectedDate(new Date());
           setLoading(false);
         }
-        console.log(res.data);
       })
       .catch((error) => toast.error(error.code));
   };
@@ -53,6 +54,18 @@ const CreateAssignment = () => {
         </p>
         <form onSubmit={handleCreateAssignment}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+            <fieldset className="fieldset">
+              <label className="label font-bold text-sm">User Email</label>
+              <input
+                type="email"
+                name="email"
+                readOnly
+                value={user?.email || user?.providerData[0]?.email}
+                className="input w-full bg-base-100 placeholder:text-xs placeholder:font-semibold h-8"
+                placeholder="Enter Assignment Title"
+              />
+            </fieldset>
+
             <fieldset className="fieldset">
               <label className="label font-bold text-sm">
                 Assignment Title
@@ -83,7 +96,7 @@ const CreateAssignment = () => {
               </label>
               <input
                 type="url"
-                name="image"
+                name="thumbnail_image"
                 required
                 className="input w-full bg-base-100 placeholder:text-xs placeholder:font-semibold h-8"
                 placeholder="Enter Thumbnail Image URL"
@@ -118,7 +131,7 @@ const CreateAssignment = () => {
               />
             </fieldset>
 
-            <fieldset className="fieldset">
+            <fieldset className="fieldset col-span-2">
               <label className="label font-bold text-sm">Description</label>
               <input
                 type="text"
