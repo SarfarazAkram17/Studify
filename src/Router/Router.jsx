@@ -27,8 +27,13 @@ export const router = createBrowserRouter([
       },
       {
         path: "/assignments",
-        loader: ()=>fetch('http://localhost:3000/assignments'),
-        Component: Assignments
+        loader: () => fetch("http://localhost:3000/assignments"),
+        Component: Assignments,
+        hydrateFallbackElement: (
+          <div className="flex justify-center h-[50vh] items-center">
+            <span className="loading loading-bars loading-xl"></span>
+          </div>
+        ),
       },
       {
         path: "/pendingAssignments",

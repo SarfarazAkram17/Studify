@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { AuthContext } from "../../Authentication/AuthContext";
 
 const CreateAssignment = () => {
-  const { user } = useContext(AuthContext);
+  const { userEmail } = useContext(AuthContext);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [loading, setLoading] = useState(false);
 
@@ -60,7 +60,7 @@ const CreateAssignment = () => {
                 type="email"
                 name="email"
                 readOnly
-                value={user?.email || user?.providerData[0]?.email}
+                value={userEmail}
                 className="input w-full bg-base-100 placeholder:text-xs placeholder:font-semibold h-8"
                 placeholder="Enter Assignment Title"
               />

@@ -14,6 +14,7 @@ import { auth } from "../Firebase/firebase.config";
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const userEmail = user?.email || user?.providerData[0]?.email
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -58,6 +59,7 @@ const AuthProvider = ({ children }) => {
 
   const userInfo = {
     user,
+    userEmail,
     loading,
     createUser,
     loginUser,

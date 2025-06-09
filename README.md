@@ -20,3 +20,4 @@ react tooltip
 framer motion
 axios
 react-datepicker
+sweetalert2
