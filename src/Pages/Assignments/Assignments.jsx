@@ -12,6 +12,11 @@ const Assignments = () => {
   const [assignments, setAssignments] = useState(initialAssignments);
 
   const handleAssignmentDelete = (id) => {
+
+    if(!userEmail){
+     return toast.warn('Login First')
+    }
+
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",

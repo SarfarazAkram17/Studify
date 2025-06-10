@@ -30,7 +30,7 @@ const AssignmentDetails = () => {
       googleDocLink: form.googleDocLink.value,
       quickNote: form.quickNote.value,
       status: "pending",
-      userEmail,
+      submitter_email: userEmail,
     };
 
     setSubmitting(true);
@@ -93,7 +93,45 @@ const AssignmentDetails = () => {
         </button>
       </div>
 
-      
+      {/* Modal for submission */}
+      {showModal && (
+        <div className="fixed inset-0 backdrop-blur-lg bg-opacity-40 z-50 flex justify-center items-center">
+          <div className="bg-base-100 p-8 rounded-lg w-full max-w-lg shadow-xl">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">Submit Assignment</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-semibold mb-1">Google Docs Link</label>
+                <input
+                  type="url"
+                  name="googleDocLink"
+                  required
+                  className="input input-bordered w-full"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold mb-1">Quick Note</label>
+                <textarea
+                  name="quickNote"
+                  rows="3"
+                  className="textarea textarea-bordered w-full"
+                ></textarea>
+              </div>
+              <div className="flex justify-end gap-2 mt-4">
+                <button
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                  className="btn text-lg"
+                >
+                  Cancel
+                </button>
+                <button type="submit" className="btn btn-info text-lg" disabled={submitting}>
+                  {submitting ? <span className="loading loading-spinner loading-md"></span> : "Submit"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
