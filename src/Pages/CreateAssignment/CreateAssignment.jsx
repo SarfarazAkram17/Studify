@@ -8,7 +8,7 @@ import { AuthContext } from "../../Authentication/AuthContext";
 const CreateAssignment = () => {
   const { userEmail } = useContext(AuthContext);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [loading, setLoading] = useState(false);
+  const [creating, setCreating] = useState(false);
 
   const handleCreateAssignment = (e) => {
     e.preventDefault();
@@ -16,7 +16,7 @@ const CreateAssignment = () => {
     const formData = new FormData(form);
     const assignment = Object.fromEntries(formData.entries());
     assignment.dueDate = selectedDate;
-    setLoading(true);
+    setCreating(true);
 
     axios
       .post("http://localhost:3000/assignments", assignment)
@@ -25,7 +25,7 @@ const CreateAssignment = () => {
           toast.success("You created assignment successfully");
           form.reset();
           setSelectedDate(new Date());
-          setLoading(false);
+          setCreating(false);
         }
       })
       .catch((error) => toast.error(error.code));
@@ -138,9 +138,9 @@ const CreateAssignment = () => {
 
           <button
             className="w-full btn mt-12 text-2xl md:text-3xl btn-info rounded-full"
-            disabled={loading}
+            disabled={creating}
           >
-            {loading ? (
+            {creating ? (
               <span className="loading loading-spinner loading-md"></span>
             ) : (
               "Create Assignment"

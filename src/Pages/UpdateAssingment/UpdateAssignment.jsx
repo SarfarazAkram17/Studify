@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../../Authentication/AuthContext";
-import { Link, useLoaderData } from "react-router";
+import { Link, useLoaderData, useNavigate } from "react-router";
 import DatePicker from "react-datepicker";
 import { BsArrowLeftCircleFill } from "react-icons/bs";
 import axios from "axios";
@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 
 const UpdateAssignment = () => {
   const { userEmail } = useContext(AuthContext);
+  const navigate = useNavigate();
   const assignment = useLoaderData();
   const {
     _id,
@@ -21,7 +22,7 @@ const UpdateAssignment = () => {
   } = assignment;
 
   const [selectedDate, setSelectedDate] = useState(dueDate);
-  const [loading, setLoading] = useState(false);
+  const [updating, setUpdating] = useState(false);
 
   const handleUpdateAssignment = (e) => {
     e.preventDefault();
@@ -30,7 +31,7 @@ const UpdateAssignment = () => {
     const updatedAssignment = Object.fromEntries(formData.entries());
     updatedAssignment.dueDate = selectedDate;
 
-    setLoading(true)
+    setUpdating(true);
 
     axios
       .put(
@@ -40,10 +41,11 @@ const UpdateAssignment = () => {
       .then((res) => {
         if (res.data.modifiedCount) {
           toast.success("You successfully update the assignment");
+          navigate("/assignments");
         } else {
           toast.error(res.data.message);
         }
-        setLoading(false)
+        setUpdating(false);
       })
       .catch((error) => toast.error(error.code));
   };
@@ -51,7 +53,7 @@ const UpdateAssignment = () => {
   return (
     <div className="px-4">
       <div className="my-8 max-w-5xl mx-auto">
-        <Link to={-1}>
+        <Link to="/assignments">
           <BsArrowLeftCircleFill size={25} />
         </Link>
       </div>
@@ -161,9 +163,9 @@ const UpdateAssignment = () => {
 
           <button
             className="w-full btn mt-12 text-2xl md:text-3xl btn-info rounded-full"
-            disabled={loading}
+            disabled={updating}
           >
-            {loading ? (
+            {updating ? (
               <span className="loading loading-spinner loading-md"></span>
             ) : (
               "Update Assignment"

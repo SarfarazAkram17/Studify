@@ -8,7 +8,7 @@ import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import CreateAssignment from "../Pages/CreateAssignment/CreateAssignment";
 import Assignments from "../Pages/Assignments/Assignments";
 import UpdateAssignment from "../Pages/UpdateAssingment/UpdateAssignment";
-// import AssignmentDetails from "../Pages/AssignmentDetails/AssignmentDetails";
+import AssignmentDetails from "../Pages/AssignmentDetails/AssignmentDetails";
 
 export const router = createBrowserRouter([
   {
@@ -53,21 +53,21 @@ export const router = createBrowserRouter([
           </PrivateRouter>
         ),
       },
-      // {
-      //   path: "/assignmentDetails/:id",
-      //   loader: ({ params }) =>
-      //     fetch(`http://localhost:3000/assignments/${params.id}`),
-      //   element: (
-      //     <PrivateRouter>
-      //       <AssignmentDetails></AssignmentDetails>
-      //     </PrivateRouter>
-      //   ),
-      //   hydrateFallbackElement: (
-      //     <div className="flex justify-center h-[50vh] items-center">
-      //       <span className="loading loading-bars loading-xl"></span>
-      //     </div>
-      //   ),
-      // },
+      {
+        path: "/assignmentDetails/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/assignments/${params.id}`),
+        element: (
+          <PrivateRouter>
+            <AssignmentDetails></AssignmentDetails>
+          </PrivateRouter>
+        ),
+        hydrateFallbackElement: (
+          <div className="flex justify-center h-[50vh] items-center">
+            <span className="loading loading-bars loading-xl"></span>
+          </div>
+        ),
+      },
       {
         path: "/updateAssignment/:id",
         loader: ({ params }) =>
