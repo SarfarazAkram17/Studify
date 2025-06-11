@@ -7,7 +7,7 @@ import axios from "axios";
 
 const AssignmentDetails = () => {
   const assignment = useLoaderData();
-  const { userEmail } = useContext(AuthContext);
+  const { user, userEmail } = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
@@ -22,7 +22,7 @@ const AssignmentDetails = () => {
     marks,
   } = assignment;
 
-  const handleSubmit = (e) => {
+  const handleSubmission = (e) => {
     e.preventDefault();
     const form = e.target;
     const submission = {
@@ -30,17 +30,24 @@ const AssignmentDetails = () => {
       googleDocLink: form.googleDocLink.value,
       quickNote: form.quickNote.value,
       status: "pending",
-      submitter_email: userEmail,
+      examinee_email: userEmail,
+      examinee_name: user.displayName,
     };
 
     setSubmitting(true);
 
     axios
       .post("http://localhost:3000/submissions", submission)
-      .then(() => {
-        toast.success("Assignment submitted successfully!");
-        setShowModal(false);
-        setSubmitting(false);
+      .then((res) => {
+        if (res.data.insertedId) {
+          toast.success("Assignment submitted successfully!");
+          setShowModal(false);
+          setSubmitting(false);
+        } else {
+          toast.error(res.data.message);
+          setShowModal(false);
+          setSubmitting(false);
+        }
       })
       .catch((error) => {
         toast.error(error.code);
@@ -67,7 +74,7 @@ const AssignmentDetails = () => {
           <img
             src={thumbnail_image}
             alt={title}
-            className="w-[50%] h-44 rounded-lg md:h-48 lg:h-52 object-cover"
+            className="w-[100%] md:w-[50%] h-auto rounded-lg"
           />
         </div>
         <h1 className="text-3xl md:text-4xl font-bold">{title}</h1>
@@ -96,24 +103,30 @@ const AssignmentDetails = () => {
       {/* Modal for submission */}
       {showModal && (
         <div className="fixed inset-0 backdrop-blur-lg bg-opacity-40 z-50 flex justify-center items-center">
-          <div className="bg-base-100 p-8 rounded-lg w-full max-w-lg shadow-xl">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">Submit Assignment</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="bg-base-200 p-8 mx-4 rounded-lg w-full max-w-lg shadow-xl">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
+              Submit Assignment
+            </h2>
+            <form onSubmit={handleSubmission} className="space-y-4">
               <div>
-                <label className="block text-sm font-semibold mb-1">Google Docs Link</label>
+                <label className="block text-sm font-semibold mb-1">
+                  Google Docs Link
+                </label>
                 <input
                   type="url"
                   name="googleDocLink"
                   required
-                  className="input input-bordered w-full"
+                  className="input input-bordered w-full bg-base-100"
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold mb-1">Quick Note</label>
+                <label className="block text-sm font-semibold mb-1">
+                  Quick Note
+                </label>
                 <textarea
                   name="quickNote"
                   rows="3"
-                  className="textarea textarea-bordered w-full"
+                  className="textarea textarea-bordered w-full bg-base-100"
                 ></textarea>
               </div>
               <div className="flex justify-end gap-2 mt-4">
@@ -124,8 +137,16 @@ const AssignmentDetails = () => {
                 >
                   Cancel
                 </button>
-                <button type="submit" className="btn btn-info text-lg" disabled={submitting}>
-                  {submitting ? <span className="loading loading-spinner loading-md"></span> : "Submit"}
+                <button
+                  type="submit"
+                  className="btn btn-info text-lg"
+                  disabled={submitting}
+                >
+                  {submitting ? (
+                    <span className="loading loading-spinner loading-md"></span>
+                  ) : (
+                    "Submit"
+                  )}
                 </button>
               </div>
             </form>

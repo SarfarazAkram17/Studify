@@ -9,6 +9,8 @@ import CreateAssignment from "../Pages/CreateAssignment/CreateAssignment";
 import Assignments from "../Pages/Assignments/Assignments";
 import UpdateAssignment from "../Pages/UpdateAssingment/UpdateAssignment";
 import AssignmentDetails from "../Pages/AssignmentDetails/AssignmentDetails";
+import MyAttemptedAssignments from "../Pages/MyAttemptedAssignments/MyAttemptedAssignments";
+import PendingAssingments from "../Pages/PendingAssignments/PendingAssignments";
 
 export const router = createBrowserRouter([
   {
@@ -39,9 +41,23 @@ export const router = createBrowserRouter([
       },
       {
         path: "/pendingAssignments",
+        loader: () => fetch("http://localhost:3000/submissions?status=pending"),
         element: (
           <PrivateRouter>
-            <p>cooking</p>
+            <PendingAssingments></PendingAssingments>
+          </PrivateRouter>
+        ),
+        hydrateFallbackElement: (
+          <div className="flex justify-center h-[50vh] items-center">
+            <span className="loading loading-bars loading-xl"></span>
+          </div>
+        ),
+      },
+      {
+        path: "/giveAssignmentMark/:id",
+        element: (
+          <PrivateRouter>
+            still cooking
           </PrivateRouter>
         ),
       },
@@ -87,7 +103,7 @@ export const router = createBrowserRouter([
         path: "/myAttemptedAssignments",
         element: (
           <PrivateRouter>
-            <p>cooking</p>
+            <MyAttemptedAssignments></MyAttemptedAssignments>
           </PrivateRouter>
         ),
       },
