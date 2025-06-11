@@ -234,7 +234,7 @@ const Navbar = () => {
               <div tabIndex={0} role="button">
                 <img
                   src={user.photoURL}
-                  alt="profile"
+                  alt="Profile"
                   data-tooltip-id="my-tooltip"
                   data-tooltip-content={user.displayName}
                   className="rounded-full w-12 h-12 cursor-pointer"

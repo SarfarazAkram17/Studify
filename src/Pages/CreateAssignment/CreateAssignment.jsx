@@ -16,6 +16,7 @@ const CreateAssignment = () => {
     const formData = new FormData(form);
     const assignment = Object.fromEntries(formData.entries());
     assignment.dueDate = selectedDate;
+    assignment.marks = parseInt(assignment.marks);
     setCreating(true);
 
     axios

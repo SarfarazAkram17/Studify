@@ -89,7 +89,7 @@ const AssignmentDetails = () => {
           <strong>Difficulty:</strong> {difficulty}
         </p>
         <p className="text-sm font-semibold">
-          <strong>Due Date: </strong> {dueDate.slice(0, 10)}
+          <strong>Due Date: </strong> {dueDate?.slice(0, 10)}
         </p>
 
         <button
@@ -103,7 +103,7 @@ const AssignmentDetails = () => {
       {/* Modal for submission */}
       {showModal && (
         <div className="fixed inset-0 backdrop-blur-lg bg-opacity-40 z-50 flex justify-center items-center">
-          <div className="bg-base-200 p-8 mx-4 rounded-lg w-full max-w-lg shadow-xl">
+          <div className="bg-base-200 p-8 mx-4 rounded-lg w-full max-w-lg shadow-xl border-2">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
               Submit Assignment
             </h2>
@@ -116,7 +116,8 @@ const AssignmentDetails = () => {
                   type="url"
                   name="googleDocLink"
                   required
-                  className="input input-bordered w-full bg-base-100"
+                  className="input input-bordered w-full bg-base-100 placeholder:text-xs placeholder:font-semibold h-8"
+                  placeholder="Google Doc link"
                 />
               </div>
               <div>
@@ -126,14 +127,16 @@ const AssignmentDetails = () => {
                 <textarea
                   name="quickNote"
                   rows="3"
-                  className="textarea textarea-bordered w-full bg-base-100"
+                  required
+                  className="textarea textarea-bordered w-full bg-base-100 placeholder:text-xs placeholder:font-semibold"
+                  placeholder="Write Quick Notes"
                 ></textarea>
               </div>
               <div className="flex justify-end gap-2 mt-4">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="btn text-lg"
+                  className="btn btn-error text-lg"
                 >
                   Cancel
                 </button>

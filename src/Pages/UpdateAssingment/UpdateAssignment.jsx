@@ -30,6 +30,7 @@ const UpdateAssignment = () => {
     const formData = new FormData(form);
     const updatedAssignment = Object.fromEntries(formData.entries());
     updatedAssignment.dueDate = selectedDate;
+    updatedAssignment.marks = parseInt(updatedAssignment.marks);
 
     setUpdating(true);
 

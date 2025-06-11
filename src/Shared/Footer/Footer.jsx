@@ -52,7 +52,6 @@ const Footer = () => {
             <li>
               <NavLink
                 to="/"
-                className="hover:underline"
                 aria-label="Go to home page"
               >
                 Home
@@ -61,7 +60,6 @@ const Footer = () => {
             <li>
               <NavLink
                 to="/assignments"
-                className="hover:underline"
                 aria-label="View all assignments"
               >
                 Assignments
@@ -71,7 +69,6 @@ const Footer = () => {
               <li>
                 <NavLink
                   to="/pendingAssignments"
-                  className="hover:underline"
                   aria-label="View pending assignments"
                 >
                   Pending Assignments

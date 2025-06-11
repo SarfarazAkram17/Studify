@@ -11,6 +11,7 @@ import UpdateAssignment from "../Pages/UpdateAssingment/UpdateAssignment";
 import AssignmentDetails from "../Pages/AssignmentDetails/AssignmentDetails";
 import MyAttemptedAssignments from "../Pages/MyAttemptedAssignments/MyAttemptedAssignments";
 import PendingAssingments from "../Pages/PendingAssignments/PendingAssignments";
+import GiveAssignmentMark from "../Pages/GiveAssignmentMark/GiveAssignmentMark";
 
 export const router = createBrowserRouter([
   {
@@ -55,10 +56,16 @@ export const router = createBrowserRouter([
       },
       {
         path: "/giveAssignmentMark/:id",
+        loader: ({params})=>fetch(`http://localhost:3000/submissions/${params.id}`),
         element: (
           <PrivateRouter>
-            still cooking
+            <GiveAssignmentMark></GiveAssignmentMark>
           </PrivateRouter>
+        ),
+                hydrateFallbackElement: (
+          <div className="flex justify-center h-[50vh] items-center">
+            <span className="loading loading-bars loading-xl"></span>
+          </div>
         ),
       },
       {
