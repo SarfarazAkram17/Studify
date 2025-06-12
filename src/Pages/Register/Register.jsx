@@ -38,14 +38,13 @@ const Register = () => {
     }
 
     createUser(email, password)
-      .then((users) => {
+      .then(() => {
         toast.success("You registered successfully");
         updateUserProfile(name, photo).catch((error) =>
           toast.error(error.code)
         );
         navigate(location.state || "/");
         form.reset();
-        console.log(users);
       })
       .catch((error) => toast.error(error.code));
   };

@@ -1,10 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import MainLayout from "../Layouts/MainLayout";
-import Home from "../Pages/Home/Home";
-import Login from "../Pages/Login/Login";
-import Register from "../Pages/Register/Register";
 import PrivateRouter from "./PrivateRouter";
-import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import CreateAssignment from "../Pages/CreateAssignment/CreateAssignment";
 import Assignments from "../Pages/Assignments/Assignments";
 import UpdateAssignment from "../Pages/UpdateAssingment/UpdateAssignment";
@@ -14,7 +10,12 @@ import PendingAssingments from "../Pages/PendingAssignments/PendingAssignments";
 import GiveAssignmentMark from "../Pages/GiveAssignmentMark/GiveAssignmentMark";
 import Lottie from "lottie-react";
 import lottieLoading from "../assets/loading.json";
+import { lazy, Suspense } from "react";
 
+const Home = lazy(() => import("../Pages/Home/Home"));
+const Login = lazy(() => import("../Pages/Login/Login"));
+const Register = lazy(() => import("../Pages/Register/Register"));
+const ErrorPage = lazy(() => import("../Pages/ErrorPage/ErrorPage"));
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -22,15 +23,51 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        Component: Home,
+        element: (
+          <Suspense
+            fallback={
+              <Lottie
+                loop={true}
+                animationData={lottieLoading}
+                className="h-[40vh] w-auto"
+              ></Lottie>
+            }
+          >
+            <Home></Home>
+          </Suspense>
+        ),
       },
       {
         path: "/login",
-        Component: Login,
+        element: (
+          <Suspense
+            fallback={
+              <Lottie
+                loop={true}
+                animationData={lottieLoading}
+                className="h-[40vh] w-auto"
+              ></Lottie>
+            }
+          >
+            <Login></Login>
+          </Suspense>
+        ),
       },
       {
         path: "/register",
-        Component: Register,
+        element: (
+          <Suspense
+            fallback={
+              <Lottie
+                loop={true}
+                animationData={lottieLoading}
+                className="h-[40vh] w-auto"
+              ></Lottie>
+            }
+          >
+            <Register></Register>
+          </Suspense>
+        ),
       },
       {
         path: "/assignments",
@@ -131,6 +168,20 @@ export const router = createBrowserRouter([
   },
   {
     path: "*",
-    Component: ErrorPage,
+    element: (
+      <Suspense
+        fallback={
+          <div className="flex justify-center items-center min-h-screen">
+            <Lottie
+              loop={true}
+              animationData={lottieLoading}
+              className="h-[50vh] w-auto"
+            ></Lottie>
+          </div>
+        }
+      >
+        <ErrorPage></ErrorPage>
+      </Suspense>
+    ),
   },
 ]);
