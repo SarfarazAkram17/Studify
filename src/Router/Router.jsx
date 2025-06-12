@@ -72,15 +72,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/assignments",
-        loader: () => fetch("http://localhost:3000/assignments"),
         Component: Assignments,
-        hydrateFallbackElement: (
-          <Lottie
-            loop={true}
-            animationData={lottieLoading}
-            className="h-[40vh] w-auto"
-          ></Lottie>
-        ),
       },
       {
         path: "/pendingAssignments",

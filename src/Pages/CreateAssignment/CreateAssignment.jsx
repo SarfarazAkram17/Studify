@@ -15,6 +15,33 @@ const CreateAssignment = () => {
     const form = e.target;
     const formData = new FormData(form);
     const assignment = Object.fromEntries(formData.entries());
+
+    assignment.title = assignment.title.trim();
+    assignment.description = assignment.description.trim();
+    assignment.thumbnail_image = assignment.thumbnail_image.trim();
+
+    if (assignment.title.length < 5) {
+      toast.error("Title must be at least 5 characters long");
+      setCreating(false);
+      return;
+    }
+
+    if (assignment.marks < 0) {
+      setCreating(false);
+      return toast.error("Assignment marks should be positive number");
+    }
+
+    if (assignment.marks > 100) {
+      setCreating(false);
+      return toast.error("Maximum assignment marks is 100");
+    }
+
+    if (selectedDate < new Date()) {
+      toast.error("Due date cannot be in the past");
+      setCreating(false);
+      return;
+    }
+
     assignment.dueDate = selectedDate;
     assignment.marks = parseInt(assignment.marks);
     setCreating(true);
@@ -31,7 +58,7 @@ const CreateAssignment = () => {
       })
       .catch((error) => {
         toast.error(error.code);
-        setCreating(false)
+        setCreating(false);
       });
   };
 
@@ -133,6 +160,7 @@ const CreateAssignment = () => {
               <input
                 type="text"
                 name="description"
+                minLength={30}
                 required
                 className="input w-full bg-base-100 placeholder:text-xs placeholder:font-semibold h-8"
                 placeholder="Enter Description"

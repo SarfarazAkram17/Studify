@@ -32,7 +32,33 @@ const UpdateAssignment = () => {
     updatedAssignment.dueDate = selectedDate;
     updatedAssignment.marks = parseInt(updatedAssignment.marks);
 
+    updatedAssignment.title = updatedAssignment.title.trim();
+    updatedAssignment.description = updatedAssignment.description.trim();
+    updatedAssignment.thumbnail_image =
+      updatedAssignment.thumbnail_image.trim();
+
     setUpdating(true);
+    if (updatedAssignment.title.length < 5) {
+      toast.error("Title must be at least 5 characters long");
+      setUpdating(false);
+      return;
+    }
+
+    if (updatedAssignment.marks < 0) {
+      setUpdating(false);
+      return toast.error("Assignment marks should be positive number");
+    }
+
+    if (updatedAssignment.marks > 100) {
+      setUpdating(false);
+      return toast.error("Maximum assignment marks is 100");
+    }
+
+    if (selectedDate < new Date()) {
+      toast.error("Due date cannot be in the past");
+      setUpdating(false);
+      return;
+    }
 
     axios
       .put(
@@ -49,8 +75,8 @@ const UpdateAssignment = () => {
         setUpdating(false);
       })
       .catch((error) => {
-        toast.error(error.code)
-        setUpdating(false)
+        toast.error(error.code);
+        setUpdating(false);
       });
   };
 
@@ -158,6 +184,7 @@ const UpdateAssignment = () => {
                 type="text"
                 name="description"
                 defaultValue={description}
+                minLength={30}
                 required
                 className="input w-full bg-base-100 placeholder:text-xs placeholder:font-semibold h-8"
                 placeholder="Enter Description"

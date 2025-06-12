@@ -10,30 +10,50 @@ const Register = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleRegister = (e) => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    const name = formData.get("name");
-    const email = formData.get("email");
-    const photo = formData.get("photo");
+    const name = formData.get("name").trim();
+    const email = formData.get("email").trim();
+    const photo = formData.get("photo").trim();
     const password = formData.get("password");
+
+    setLoading(true);
+
+    if (name.length < 5) {
+      toast.error("Name must be at least 5 characters long");
+      setLoading(false);
+      return;
+    }
 
     const uppercaseRegex = /(?=.*[A-Z])/;
     const lowercaseRegex = /(?=.*[a-z])/;
     const lengthRegex = /.{6,}/;
+    const specialCharRegex = /[?@#$&]/;
 
     if (!uppercaseRegex.test(password)) {
       toast.error("Password should have at least one uppercase");
+      setLoading(false);
       return;
     }
     if (!lowercaseRegex.test(password)) {
       toast.error("Password should have at least one lowercase");
+      setLoading(false);
       return;
     }
     if (!lengthRegex.test(password)) {
       toast.error("Password should have at least 6 characters or longer");
+      setLoading(false);
+      return;
+    }
+    if (!specialCharRegex.test(password)) {
+      toast.error(
+        "Password must include at least one special character from: ? @ # $ &"
+      );
+      setLoading(false);
       return;
     }
 
@@ -45,8 +65,12 @@ const Register = () => {
         );
         navigate(location.state || "/");
         form.reset();
+        setLoading(false);
       })
-      .catch((error) => toast.error(error.code));
+      .catch((error) => {
+        toast.error(error.code);
+        setLoading(false);
+      });
   };
 
   return (
@@ -73,7 +97,7 @@ const Register = () => {
             />
             <label className="label font-semibold">Photo URL</label>
             <input
-              type="text"
+              type="url"
               required
               className="input mb-4 text-lg placeholder:text-[15px] placeholder:font-bold rancho"
               name="photo"
@@ -102,7 +126,16 @@ const Register = () => {
                 />
               )}
             </div>
-            <button className="btn btn-neutral mt-4 text-2xl">Register</button>
+            <button
+              className="btn btn-neutral mt-4 text-2xl"
+              disabled={loading}
+            >
+              {loading ? (
+                <span className="loading loading-spinner loading-md"></span>
+              ) : (
+                "Register"
+              )}
+            </button>
             <p className="text-xs my-2">
               Already have an account ? Please{" "}
               <Link
