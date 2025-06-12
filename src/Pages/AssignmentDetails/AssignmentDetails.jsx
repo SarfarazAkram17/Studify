@@ -64,9 +64,16 @@ const AssignmentDetails = () => {
           </Link>
         </div>
 
-        <h1 className="text-5xl font-bold mb-12 text-center">
+        <h1 className="text-5xl text-info font-bold mb-6 text-center">
           Assignment Details
         </h1>
+        <p className="text-center text-gray-600 text-[13px] max-w-2xl mx-auto font-semibold mb-10">
+          Review the assignment information carefully including its difficulty,
+          due date, and total marks. If you're ready to take this assignment,
+          click on the "Take Assignment" button to submit your response. Make
+          sure to include a valid Google Docs link and a short note explaining
+          your work.
+        </p>
       </div>
 
       <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 text-center space-y-4 bg-base-200 border-2 border-gray-200 rounded-xl shadow-lg">

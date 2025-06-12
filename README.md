@@ -21,3 +21,4 @@ framer motion
 axios
 react-datepicker
 sweetalert2
+lottie-react

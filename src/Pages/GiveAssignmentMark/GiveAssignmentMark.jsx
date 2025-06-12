@@ -17,7 +17,7 @@ const GiveAssignmentMark = () => {
 
   const handleGiveMarks = (e) => {
     e.preventDefault();
-    
+
     const form = e.target;
     const obtainedMarks = parseInt(form.obtained_marks.value);
     const feedback = form.feedback.value;
@@ -81,9 +81,17 @@ const GiveAssignmentMark = () => {
             </Link>
           </div>
 
-          <h1 className="text-5xl font-bold mb-12 text-center">
+          <h1 className="text-5xl font-bold mb-6 text-info text-center">
             Evaluate this Assignment
           </h1>
+          <p className="text-center text-gray-600 text-[13px] max-w-2xl mx-auto font-semibold mb-10">
+            Please review the assignment submitted by the student carefully. Use
+            the provided Google Docs link to access the full submission and
+            refer to the quick note. Enter the marks the student
+            has earned out of the total and provide clear, constructive feedback
+            to support their learning. Once submitted, the evaluation will be
+            recorded and the student's status will be updated to completed.
+          </p>
         </div>
 
         <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 text-center space-y-4 bg-base-200 border-2 border-gray-200 rounded-xl shadow-lg">
@@ -94,7 +102,7 @@ const GiveAssignmentMark = () => {
           <p className="text-sm">
             <strong>Google Doc link:</strong>{" "}
             <a
-              className="text-info font-semibold hover:underline"
+              className="text-info font-semibold hover:underline break-words break-all"
               href={googleDocLink}
               target="_blank"
             >
@@ -105,7 +113,7 @@ const GiveAssignmentMark = () => {
             <strong>Quick Note:</strong> {quickNote}
           </p>
 
-          <form onSubmit={handleGiveMarks} className="space-y-4 px-8">
+          <form onSubmit={handleGiveMarks} className="space-y-4 px-4 md:px-8">
             <fieldset className="fieldset">
               <label className="label font-bold text-sm">Obtained Marks</label>
               <input

@@ -5,7 +5,7 @@ import { Tooltip } from "react-tooltip";
 import { toast } from "react-toastify";
 
 const Navbar = () => {
-  const { user, logOutUser } = useContext(AuthContext);
+  const { user, userEmail, logOutUser } = useContext(AuthContext);
   const [theme, setTheme] = useState("light");
   const [themeLoaded, setThemeLoaded] = useState(false);
 
@@ -59,8 +59,8 @@ const Navbar = () => {
       </NavLink>
       <NavLink
         className="m-1 px-2 py-1 text-xs font-semibold"
-        to="/myAttemptedAssignments"
-      >
+        to={`/myAttemptedAssignments?email=${userEmail}`}
+              >
         My Attempted Assignments
       </NavLink>
     </>
@@ -75,7 +75,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar bg-base-100 px-8">
+    <div className="navbar bg-base-100 px-4 sm:px-8">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

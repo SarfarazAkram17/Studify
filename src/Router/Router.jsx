@@ -12,6 +12,8 @@ import AssignmentDetails from "../Pages/AssignmentDetails/AssignmentDetails";
 import MyAttemptedAssignments from "../Pages/MyAttemptedAssignments/MyAttemptedAssignments";
 import PendingAssingments from "../Pages/PendingAssignments/PendingAssignments";
 import GiveAssignmentMark from "../Pages/GiveAssignmentMark/GiveAssignmentMark";
+import Lottie from "lottie-react";
+import lottieLoading from "../assets/loading.json";
 
 export const router = createBrowserRouter([
   {
@@ -35,9 +37,11 @@ export const router = createBrowserRouter([
         loader: () => fetch("http://localhost:3000/assignments"),
         Component: Assignments,
         hydrateFallbackElement: (
-          <div className="flex justify-center h-[50vh] items-center">
-            <span className="loading loading-bars loading-xl"></span>
-          </div>
+          <Lottie
+            loop={true}
+            animationData={lottieLoading}
+            className="h-[40vh] w-auto"
+          ></Lottie>
         ),
       },
       {
@@ -49,23 +53,28 @@ export const router = createBrowserRouter([
           </PrivateRouter>
         ),
         hydrateFallbackElement: (
-          <div className="flex justify-center h-[50vh] items-center">
-            <span className="loading loading-bars loading-xl"></span>
-          </div>
+          <Lottie
+            loop={true}
+            animationData={lottieLoading}
+            className="h-[40vh] w-auto"
+          ></Lottie>
         ),
       },
       {
         path: "/giveAssignmentMark/:id",
-        loader: ({params})=>fetch(`http://localhost:3000/submissions/${params.id}`),
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/submissions/${params.id}`),
         element: (
           <PrivateRouter>
             <GiveAssignmentMark></GiveAssignmentMark>
           </PrivateRouter>
         ),
-                hydrateFallbackElement: (
-          <div className="flex justify-center h-[50vh] items-center">
-            <span className="loading loading-bars loading-xl"></span>
-          </div>
+        hydrateFallbackElement: (
+          <Lottie
+            loop={true}
+            animationData={lottieLoading}
+            className="h-[40vh] w-auto"
+          ></Lottie>
         ),
       },
       {
@@ -86,9 +95,11 @@ export const router = createBrowserRouter([
           </PrivateRouter>
         ),
         hydrateFallbackElement: (
-          <div className="flex justify-center h-[50vh] items-center">
-            <span className="loading loading-bars loading-xl"></span>
-          </div>
+          <Lottie
+            loop={true}
+            animationData={lottieLoading}
+            className="h-[40vh] w-auto"
+          ></Lottie>
         ),
       },
       {
@@ -101,9 +112,11 @@ export const router = createBrowserRouter([
           </PrivateRouter>
         ),
         hydrateFallbackElement: (
-          <div className="flex justify-center h-[50vh] items-center">
-            <span className="loading loading-bars loading-xl"></span>
-          </div>
+          <Lottie
+            loop={true}
+            animationData={lottieLoading}
+            className="h-[40vh] w-auto"
+          ></Lottie>
         ),
       },
       {
