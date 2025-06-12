@@ -59,7 +59,7 @@ const AssignmentDetails = () => {
     <div className="my-12 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <Link to="/assignments">
+          <Link to={-1}>
             <BsArrowLeftCircleFill size={22} />
           </Link>
         </div>

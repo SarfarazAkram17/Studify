@@ -34,7 +34,10 @@ const PendingAssignments = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {pendingAssignments.map((assignment) => (
-                <div key={assignment._id} className="space-y-4 bg-base-300 p-4 rounded-lg">
+                <div
+                  key={assignment._id}
+                  className="space-y-4 bg-base-300 p-4 rounded-lg"
+                >
                   <h2 className="text-2xl font-semibold">
                     {assignment.assignment_title}
                   </h2>
@@ -48,7 +51,10 @@ const PendingAssignments = () => {
                   <p className="text-xs font-medium">
                     <strong>Examinee Name:</strong> {assignment.examinee_name}
                   </p>
-                <Link to={`/giveAssignmentMark/${assignment._id}`}>  <button className="btn btn-info text-lg">Give Mark</button></Link>
+                  <Link to={`/giveAssignmentMark/${assignment._id}`}>
+                    {" "}
+                    <button className="btn btn-info text-lg">Give Mark</button>
+                  </Link>
                 </div>
               ))}
             </div>

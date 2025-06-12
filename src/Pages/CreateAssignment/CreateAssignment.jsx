@@ -29,7 +29,10 @@ const CreateAssignment = () => {
           setCreating(false);
         }
       })
-      .catch((error) => toast.error(error.code));
+      .catch((error) => {
+        toast.error(error.code);
+        setCreating(false)
+      });
   };
 
   return (

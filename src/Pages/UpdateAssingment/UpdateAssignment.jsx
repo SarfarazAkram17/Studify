@@ -42,19 +42,22 @@ const UpdateAssignment = () => {
       .then((res) => {
         if (res.data.modifiedCount) {
           toast.success("You successfully update the assignment");
-          navigate("/assignments");
+          navigate(-1);
         } else {
           toast.error(res.data.message);
         }
         setUpdating(false);
       })
-      .catch((error) => toast.error(error.code));
+      .catch((error) => {
+        toast.error(error.code)
+        setUpdating(false)
+      });
   };
 
   return (
     <div className="px-4">
       <div className="my-8 max-w-5xl mx-auto">
-        <Link to="/assignments">
+        <Link to={-1}>
           <BsArrowLeftCircleFill size={25} />
         </Link>
       </div>

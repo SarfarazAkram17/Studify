@@ -8,6 +8,7 @@ const MyAttemptedAssignments = () => {
   const { userEmail } = useContext(AuthContext);
   const [mySubmissions, setMySubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
+  console.log(mySubmissions)
 
   useEffect(() => {
     axios

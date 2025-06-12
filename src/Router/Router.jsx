@@ -11,6 +11,7 @@ import GiveAssignmentMark from "../Pages/GiveAssignmentMark/GiveAssignmentMark";
 import Lottie from "lottie-react";
 import lottieLoading from "../assets/loading.json";
 import { lazy, Suspense } from "react";
+import MyCreatedAssignment from "../Pages/MyCreatedAssignment/MyCreatedAssignment";
 
 const Home = lazy(() => import("../Pages/Home/Home"));
 const Login = lazy(() => import("../Pages/Login/Login"));
@@ -154,6 +155,14 @@ export const router = createBrowserRouter([
             animationData={lottieLoading}
             className="h-[40vh] w-auto"
           ></Lottie>
+        ),
+      },
+      {
+        path: "/myCreatedAssignments",
+        element: (
+          <PrivateRouter>
+            <MyCreatedAssignment></MyCreatedAssignment>
+          </PrivateRouter>
         ),
       },
       {

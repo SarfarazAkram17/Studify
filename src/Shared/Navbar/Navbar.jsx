@@ -59,8 +59,14 @@ const Navbar = () => {
       </NavLink>
       <NavLink
         className="m-1 px-2 py-1 text-xs font-semibold"
+        to="/myCreatedAssignments"
+      >
+        My Created Assignments
+      </NavLink>
+      <NavLink
+        className="m-1 px-2 py-1 text-xs font-semibold"
         to={`/myAttemptedAssignments?email=${userEmail}`}
-              >
+      >
         My Attempted Assignments
       </NavLink>
     </>
