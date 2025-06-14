@@ -1,10 +1,9 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../../Authentication/AuthContext";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import useAuth from "../../Hooks/useAuth";
 
 const SocialLogin = ({ state, message }) => {
-  const { continueWithGoogle } = useContext(AuthContext);
+  const { continueWithGoogle } = useAuth();
   const navigate = useNavigate();
 
   const handleGoogleLogin = () => {

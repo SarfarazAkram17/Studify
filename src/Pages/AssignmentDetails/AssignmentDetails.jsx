@@ -1,13 +1,14 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { BsArrowLeftCircleFill } from "react-icons/bs";
 import { Link, useLoaderData } from "react-router";
-import { AuthContext } from "../../Authentication/AuthContext";
 import { toast } from "react-toastify";
-import axios from "axios";
+import useAuth from "../../Hooks/useAuth";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const AssignmentDetails = () => {
+  const axiosSecure = useAxiosSecure()
   const assignment = useLoaderData();
-  const { user, userEmail } = useContext(AuthContext);
+  const { user, userEmail } = useAuth();
   const [showModal, setShowModal] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
@@ -36,8 +37,8 @@ const AssignmentDetails = () => {
 
     setSubmitting(true);
 
-    axios
-      .post("http://localhost:3000/submissions", submission)
+    axiosSecure
+      .post("/submissions", submission)
       .then((res) => {
         if (res.data.insertedId) {
           toast.success("Assignment submitted successfully!");

@@ -1,20 +1,21 @@
-import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../Authentication/AuthContext";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Lottie from "lottie-react";
 import lottieLoading from "../../assets/loading.json";
 import AssignmentCard from "../../Shared/AssignmentCard/AssignmentCard";
 import Swal from "sweetalert2";
+import useAuth from "../../Hooks/useAuth";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const MyCreatedAssignments = () => {
-  const { userEmail } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure()
+  const { userEmail } = useAuth();
   const [myAssignments, setMyAssignments] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3000/assignments?email=${userEmail}`)
+    axiosSecure
+      .get(`/assignments?email=${userEmail}`)
       .then((res) => {
         setMyAssignments(res.data);
         setLoading(false);
@@ -22,7 +23,7 @@ const MyCreatedAssignments = () => {
       .catch((error) => {
         toast.error(error.code);
       });
-  }, [userEmail]);
+  }, [userEmail, axiosSecure]);
 
   if (loading) {
     return (
@@ -49,8 +50,8 @@ const MyCreatedAssignments = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios
-          .delete(`http://localhost:3000/assignments/${id}?email=${userEmail}`)
+        axiosSecure
+          .delete(`/assignments/${id}?email=${userEmail}`)
           .then((res) => {
             if (res.data.deletedCount) {
               toast.success("You successfully deleted the assignment");

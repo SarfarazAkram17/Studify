@@ -1,14 +1,14 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router";
-import { AuthContext } from "../../Authentication/AuthContext";
 import { toast } from "react-toastify";
 import SocialLogin from "../../Shared/SocialLogin/SocialLogin";
+import useAuth from "../../Hooks/useAuth";
 
 const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { loginUser } = useContext(AuthContext);
+  const { loginUser } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 

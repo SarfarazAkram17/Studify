@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Navigate, useLocation } from "react-router";
-import { AuthContext } from "../Authentication/AuthContext";
 import Lottie from "lottie-react";
 import lottieLoading from "../assets/loading.json";
+import useAuth from "../Hooks/useAuth";
 
 const PrivateRouter = ({ children }) => {
   const location = useLocation();
-  const { user, loading } = useContext(AuthContext);
+  const { user, loading } = useAuth();
 
   if (loading) {
     return <Lottie loop={true} animationData={lottieLoading} className="h-[40vh] w-auto"></Lottie>;

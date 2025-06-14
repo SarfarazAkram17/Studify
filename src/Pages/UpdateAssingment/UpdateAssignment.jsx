@@ -1,13 +1,14 @@
-import React, { useContext, useState } from "react";
-import { AuthContext } from "../../Authentication/AuthContext";
+import React, { useState } from "react";
 import { Link, useLoaderData, useNavigate } from "react-router";
 import DatePicker from "react-datepicker";
 import { BsArrowLeftCircleFill } from "react-icons/bs";
-import axios from "axios";
 import { toast } from "react-toastify";
+import useAuth from "../../Hooks/useAuth";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const UpdateAssignment = () => {
-  const { userEmail } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure()
+  const { userEmail } = useAuth();
   const navigate = useNavigate();
   const assignment = useLoaderData();
   const {
@@ -60,9 +61,9 @@ const UpdateAssignment = () => {
       return;
     }
 
-    axios
+    axiosSecure
       .put(
-        `http://localhost:3000/assignments/${_id}?email=${userEmail}`,
+        `/assignments/${_id}?email=${userEmail}`,
         updatedAssignment
       )
       .then((res) => {

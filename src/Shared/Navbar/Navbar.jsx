@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
-import { AuthContext } from "../../Authentication/AuthContext";
 import { Tooltip } from "react-tooltip";
 import { toast } from "react-toastify";
+import useAuth from "../../Hooks/useAuth";
 
 const Navbar = () => {
-  const { user, userEmail, logOutUser } = useContext(AuthContext);
+  const { user, userEmail, logOutUser } = useAuth();
   const [theme, setTheme] = useState("light");
   const [themeLoaded, setThemeLoaded] = useState(false);
 

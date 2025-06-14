@@ -1,13 +1,14 @@
-import axios from "axios";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { BsArrowLeftCircleFill } from "react-icons/bs";
 import { Link, useLoaderData, useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { AuthContext } from "../../Authentication/AuthContext";
 import Swal from "sweetalert2";
+import useAuth from "../../Hooks/useAuth";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const GiveAssignmentMark = () => {
-  const { userEmail } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure()
+  const { userEmail } = useAuth();
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
 
@@ -45,9 +46,9 @@ const GiveAssignmentMark = () => {
       confirmButtonText: "Yes, evaluate it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios
+        axiosSecure
           .patch(
-            `http://localhost:3000/submissions/${_id}?email=${userEmail}`,
+            `/submissions/${_id}?email=${userEmail}`,
             updatedSubmission
           )
           .then((res) => {

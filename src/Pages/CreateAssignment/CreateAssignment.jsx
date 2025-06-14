@@ -1,12 +1,13 @@
-import axios from "axios";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "react-toastify";
-import { AuthContext } from "../../Authentication/AuthContext";
+import useAuth from "../../Hooks/useAuth";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const CreateAssignment = () => {
-  const { userEmail } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure()
+  const { userEmail } = useAuth();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [creating, setCreating] = useState(false);
 
@@ -46,8 +47,8 @@ const CreateAssignment = () => {
     assignment.marks = parseInt(assignment.marks);
     setCreating(true);
 
-    axios
-      .post("http://localhost:3000/assignments", assignment)
+    axiosSecure
+      .post("/assignments", assignment)
       .then((res) => {
         if (res.data.insertedId) {
           toast.success("You created assignment successfully");

@@ -1,23 +1,23 @@
-import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../Authentication/AuthContext";
+import React, { useEffect, useState } from "react";
 import Lottie from "lottie-react";
 import lottieLoading from "../../assets/loading.json";
+import useAuth from "../../Hooks/useAuth";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const MyAttemptedAssignments = () => {
-  const { userEmail } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure()
+  const { userEmail } = useAuth();
   const [mySubmissions, setMySubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
-  console.log(mySubmissions)
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3000/submissions?email=${userEmail}`)
+    axiosSecure
+      .get(`/submissions?email=${userEmail}`)
       .then((res) => {
         setMySubmissions(res.data);
         setLoading(false);
       });
-  }, [userEmail]);
+  }, [userEmail, axiosSecure]);
 
   if (loading) {
     return (

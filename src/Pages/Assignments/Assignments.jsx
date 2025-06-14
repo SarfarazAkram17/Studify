@@ -1,15 +1,15 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import AssignmentCard from "../../Shared/AssignmentCard/AssignmentCard";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { AuthContext } from "../../Authentication/AuthContext";
 import { IoIosArrowDown } from "react-icons/io";
 import Lottie from "lottie-react";
 import lottieLoading from "../../assets/loading.json";
+import useAuth from "../../Hooks/useAuth";
 
 const Assignments = () => {
-  const { userEmail } = useContext(AuthContext);
+  const { userEmail } = useAuth();
   const [assignments, setAssignments] = useState([]);
   const [filter, setFilter] = useState("");
   const [searchText, setSearchText] = useState("");

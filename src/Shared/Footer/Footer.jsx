@@ -1,11 +1,10 @@
 import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from "react-icons/fa";
 import { NavLink } from "react-router";
-import { useContext } from "react";
-import { AuthContext } from "../../Authentication/AuthContext";
 import { toast } from "react-toastify";
+import useAuth from "../../Hooks/useAuth";
 
 const Footer = () => {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
 
   return (
     <footer className="bg-gray-900 text-white py-8 px-4 sm:px-6 lg:px-8 mt-12">
