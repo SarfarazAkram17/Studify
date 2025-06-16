@@ -26,10 +26,12 @@ const AssignmentDetails = () => {
   const handleSubmission = (e) => {
     e.preventDefault();
     const form = e.target;
+    const quickNote = form.quickNote.value.split(",").map((qn) => qn.trim());
+    
     const submission = {
       assignmentId: _id,
       googleDocLink: form.googleDocLink.value,
-      quickNote: form.quickNote.value,
+      quickNote,
       status: "pending",
       examinee_email: userEmail,
       examinee_name: user.displayName,
@@ -134,10 +136,14 @@ const AssignmentDetails = () => {
                 </label>
                 <textarea
                   name="quickNote"
-                  rows="3"
+                  rows="4"
                   required
                   className="textarea textarea-bordered w-full bg-base-100 placeholder:text-xs placeholder:font-semibold"
-                  placeholder="Write Quick Notes"
+                  placeholder={`Write Quick notes
+
+1. Write quick notes like this.
+2. If needed seperate with comma
+`}
                 ></textarea>
               </div>
               <div className="flex justify-end gap-2 mt-4">

@@ -9,6 +9,8 @@ const MyAttemptedAssignments = () => {
   const { userEmail, uid } = useAuth();
   const [mySubmissions, setMySubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedFeedback, setSelectedFeedback] = useState(null);
 
   useEffect(() => {
     axiosSecure
@@ -76,7 +78,15 @@ const MyAttemptedAssignments = () => {
                     {submission.status === "completed" ? (
                       <>
                         <td>{submission.obtained_marks}</td>
-                        <td>{submission.feedback}</td>
+                        <td
+                          onClick={() => {
+                            setSelectedFeedback(submission.feedback),
+                              setShowModal(true);
+                          }}
+                          className="font-semibold text-blue-500 hover:underline cursor-pointer"
+                        >
+                          See Feedback
+                        </td>
                       </>
                     ) : (
                       <>
@@ -90,6 +100,34 @@ const MyAttemptedAssignments = () => {
             </table>
           </div>
         </>
+      )}
+
+      {/* Modal for show feedback */}
+      {showModal && (
+        <div className="fixed inset-0 backdrop-blur-lg bg-opacity-40 z-50 flex justify-center items-center">
+          <div className="bg-base-200 p-8 mx-4 rounded-lg w-full max-w-lg shadow-xl border-2">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
+              Watch Feedback
+            </h2>
+
+            <div className="my-6 ">
+              {selectedFeedback.map((feedback, index) => <p className="my-1 text-center" key={index}>{feedback}</p> )}
+            </div>
+
+            <div className="flex justify-end gap-2 mt-4">
+              <button
+                type="button"
+                        onClick={() => {
+            setShowModal(false);
+            setSelectedFeedback(null);
+          }}
+                className="btn btn-error text-lg"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

@@ -7,7 +7,7 @@ import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const GiveAssignmentMark = () => {
-  const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure();
   const { uid, userEmail } = useAuth();
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
@@ -21,7 +21,7 @@ const GiveAssignmentMark = () => {
 
     const form = e.target;
     const obtainedMarks = parseInt(form.obtained_marks.value);
-    const feedback = form.feedback.value;
+    const feedback = form.feedback.value.split(',').map(f => f.trim());
 
     if (obtainedMarks > assignment_marks) {
       return toast.error(
@@ -88,10 +88,10 @@ const GiveAssignmentMark = () => {
           <p className="text-center text-gray-600 text-[13px] max-w-2xl mx-auto font-semibold mb-10">
             Please review the assignment submitted by the student carefully. Use
             the provided Google Docs link to access the full submission and
-            refer to the quick note. Enter the marks the student
-            has earned out of the total and provide clear, constructive feedback
-            to support their learning. Once submitted, the evaluation will be
-            recorded and the student's status will be updated to completed.
+            refer to the quick note. Enter the marks the student has earned out
+            of the total and provide clear, constructive feedback to support
+            their learning. Once submitted, the evaluation will be recorded and
+            the student's status will be updated to completed.
           </p>
         </div>
 
@@ -110,9 +110,9 @@ const GiveAssignmentMark = () => {
               {googleDocLink}
             </a>
           </p>
-          <p className="text-sm">
-            <strong>Quick Note:</strong> {quickNote}
-          </p>
+          <div className="text-sm">
+            <strong>Quick Note(s):</strong> {quickNote.map((note, index) => <p key={index}>{note}</p>)}
+          </div>
 
           <form onSubmit={handleGiveMarks} className="space-y-4 px-4 md:px-8">
             <fieldset className="fieldset">
@@ -129,10 +129,14 @@ const GiveAssignmentMark = () => {
               <label className="label font-bold text-sm">Feedback</label>
               <textarea
                 name="feedback"
-                rows="3"
+                rows="4"
                 required
                 className="textarea textarea-bordered w-full bg-base-100 placeholder:text-xs placeholder:font-semibold"
-                placeholder="Write Feedback"
+                placeholder={`Give Feedback
+
+1. Write Feedback like this.
+2. If needed seperate with comma
+`}
               ></textarea>
             </fieldset>
             <button
