@@ -8,7 +8,7 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const UpdateAssignment = () => {
   const axiosSecure = useAxiosSecure()
-  const { userEmail } = useAuth();
+  const { uid, userEmail } = useAuth();
   const navigate = useNavigate();
   const assignment = useLoaderData();
   const {
@@ -63,7 +63,7 @@ const UpdateAssignment = () => {
 
     axiosSecure
       .put(
-        `/assignments/${_id}?email=${userEmail}`,
+        `/assignments/${_id}?email=${userEmail}&uid=${uid}`,
         updatedAssignment
       )
       .then((res) => {

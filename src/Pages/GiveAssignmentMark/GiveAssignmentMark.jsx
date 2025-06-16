@@ -8,7 +8,7 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const GiveAssignmentMark = () => {
   const axiosSecure = useAxiosSecure()
-  const { userEmail } = useAuth();
+  const { uid, userEmail } = useAuth();
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
 
@@ -48,7 +48,7 @@ const GiveAssignmentMark = () => {
       if (result.isConfirmed) {
         axiosSecure
           .patch(
-            `/submissions/${_id}?email=${userEmail}`,
+            `/submissions/${_id}?email=${userEmail}&uid=${uid}`,
             updatedSubmission
           )
           .then((res) => {

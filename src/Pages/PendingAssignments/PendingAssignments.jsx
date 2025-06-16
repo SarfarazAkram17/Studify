@@ -1,9 +1,32 @@
-import React from "react";
-import { Link, useLoaderData } from "react-router";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import lottieLoading from "../../assets/loading.json";
+import useAuth from "../../Hooks/useAuth";
+import Lottie from "lottie-react";
 
 const PendingAssignments = () => {
-  const pendingAssignments = useLoaderData();
+  const { uid } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const [pendingAssignments, setPendingAssignments] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    axiosSecure.get(`/submissions?status=pending&uid=${uid}`).then((res) => {
+      setPendingAssignments(res.data);
+      setLoading(false);
+    });
+  }, [axiosSecure, uid]);
+
+  if (loading) {
+    return (
+      <Lottie
+        loop={true}
+        animationData={lottieLoading}
+        className="h-[40vh] w-auto"
+      ></Lottie>
+    );
+  }
   return (
     <div>
       <div className="px-4 py-10 max-w-5xl mx-auto">

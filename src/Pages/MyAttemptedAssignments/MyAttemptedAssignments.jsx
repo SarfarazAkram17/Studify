@@ -5,19 +5,19 @@ import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const MyAttemptedAssignments = () => {
-  const axiosSecure = useAxiosSecure()
-  const { userEmail } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const { userEmail, uid } = useAuth();
   const [mySubmissions, setMySubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axiosSecure
-      .get(`/submissions?email=${userEmail}`)
+      .get(`/submissions?email=${userEmail}&uid=${uid}`)
       .then((res) => {
         setMySubmissions(res.data);
         setLoading(false);
       });
-  }, [userEmail, axiosSecure]);
+  }, [userEmail, axiosSecure, uid]);
 
   if (loading) {
     return (

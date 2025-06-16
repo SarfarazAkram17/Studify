@@ -66,6 +66,7 @@ const Register = () => {
         navigate(location.state || "/");
         form.reset();
         setLoading(false);
+            window.location.reload()
       })
       .catch((error) => {
         toast.error(error.code);

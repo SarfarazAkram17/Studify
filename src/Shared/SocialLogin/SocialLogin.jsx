@@ -11,6 +11,7 @@ const SocialLogin = ({ state, message }) => {
       .then(() => {
         navigate(state || "/");
         toast.success(message);
+            window.location.reload()
       })
       .catch((error) => toast.error(error.code));
   };

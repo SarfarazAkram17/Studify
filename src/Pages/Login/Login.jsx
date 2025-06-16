@@ -28,6 +28,7 @@ const Login = () => {
         form.reset();
         setLoading(false);
         navigate(location.state || "/");
+          window.location.reload()
       })
       .catch((error) => {
         toast.error(error.code);

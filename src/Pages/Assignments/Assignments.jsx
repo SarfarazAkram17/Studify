@@ -7,9 +7,11 @@ import { IoIosArrowDown } from "react-icons/io";
 import Lottie from "lottie-react";
 import lottieLoading from "../../assets/loading.json";
 import useAuth from "../../Hooks/useAuth";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const Assignments = () => {
-  const { userEmail } = useAuth();
+  const axiosSecure = useAxiosSecure()
+  const { uid, userEmail } = useAuth();
   const [assignments, setAssignments] = useState([]);
   const [filter, setFilter] = useState("");
   const [searchText, setSearchText] = useState("");
@@ -17,7 +19,7 @@ const Assignments = () => {
   const [hasAnyAssignments, setHasAnyAssignments] = useState(true);
 
   const getAssignments = () => {
-    let url = "http://localhost:3000/assignments";
+    let url = "https://assignment-11-sarfaraz-akram.vercel.app/assignments";
     const queryParams = [];
 
     if (filter) queryParams.push(`difficulty=${filter}`);
@@ -67,18 +69,18 @@ const Assignments = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios
-          .delete(`http://localhost:3000/assignments/${id}?email=${userEmail}`)
+        axiosSecure
+          .delete(`/assignments/${id}?email=${userEmail}&uid=${uid}`)
           .then((res) => {
             if (res.data.deletedCount) {
               toast.success("Assignment deleted successfully");
               setAssignments(assignments.filter((a) => a._id !== id));
             } else {
-              toast.error(res.data.message || "Failed to delete assignment");
+              toast.error(res.data.message);
             }
           })
           .catch((error) => {
-            toast.error(error.message);
+            toast.error(error.code);
           });
       }
     });

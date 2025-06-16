@@ -6,9 +6,9 @@ import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const AssignmentDetails = () => {
-  const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure();
   const assignment = useLoaderData();
-  const { user, userEmail } = useAuth();
+  const { user, uid, userEmail } = useAuth();
   const [showModal, setShowModal] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
@@ -38,7 +38,7 @@ const AssignmentDetails = () => {
     setSubmitting(true);
 
     axiosSecure
-      .post("/submissions", submission)
+      .post(`/submissions?uid=${uid}`, submission)
       .then((res) => {
         if (res.data.insertedId) {
           toast.success("Assignment submitted successfully!");

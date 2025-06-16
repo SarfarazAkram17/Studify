@@ -7,14 +7,18 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   signInWithEmailAndPassword,
-  signOut
+  signOut,
 } from "firebase/auth";
 import { auth } from "../Firebase/firebase.config";
+
+const googleProvider = new GoogleAuthProvider();
+googleProvider.addScope("email");
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const userEmail = user?.email || user?.providerData[0]?.email
+  const userEmail = user?.email || user?.providerData[0]?.email;
+  const uid = user?.uid;
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -23,7 +27,7 @@ const AuthProvider = ({ children }) => {
 
   const loginUser = (email, password) => {
     setLoading(true);
-    return signInWithEmailAndPassword(auth, email, password)
+    return signInWithEmailAndPassword(auth, email, password);
   };
 
   const updateUserProfile = (name, photo) => {
@@ -36,15 +40,12 @@ const AuthProvider = ({ children }) => {
 
   const continueWithGoogle = () => {
     setLoading(true);
-    
-    const provider = new GoogleAuthProvider();
-    provider.addScope('email')
-    return signInWithPopup(auth, provider)
+    return signInWithPopup(auth, googleProvider);
   };
 
   const logOutUser = () => {
     setLoading(true);
-    return signOut(auth)
+    return signOut(auth);
   };
 
   useEffect(() => {
@@ -55,17 +56,18 @@ const AuthProvider = ({ children }) => {
     return () => {
       unsubscribe();
     };
-  });
+  }, []);
 
   const userInfo = {
     user,
-    userEmail,
+    uid: uid || "",
+    userEmail: userEmail || "",
     loading,
     createUser,
     loginUser,
     updateUserProfile,
     continueWithGoogle,
-    logOutUser
+    logOutUser,
   };
   return <AuthContext value={userInfo}>{children}</AuthContext>;
 };

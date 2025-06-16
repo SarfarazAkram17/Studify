@@ -76,7 +76,6 @@ export const router = createBrowserRouter([
       },
       {
         path: "/pendingAssignments",
-        loader: () => fetch("http://localhost:3000/submissions?status=pending"),
         element: (
           <PrivateRouter>
             <PendingAssingments></PendingAssingments>
@@ -93,7 +92,7 @@ export const router = createBrowserRouter([
       {
         path: "/giveAssignmentMark/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/submissions/${params.id}`),
+          fetch(`https://assignment-11-sarfaraz-akram.vercel.app/submissions/${params.id}`),
         element: (
           <PrivateRouter>
             <GiveAssignmentMark></GiveAssignmentMark>
@@ -118,7 +117,7 @@ export const router = createBrowserRouter([
       {
         path: "/assignmentDetails/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/assignments/${params.id}`),
+          fetch(`https://assignment-11-sarfaraz-akram.vercel.app/assignments/${params.id}`),
         element: (
           <PrivateRouter>
             <AssignmentDetails></AssignmentDetails>
@@ -135,7 +134,7 @@ export const router = createBrowserRouter([
       {
         path: "/updateAssignment/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/assignments/${params.id}`),
+          fetch(`https://assignment-11-sarfaraz-akram.vercel.app/assignments/${params.id}`),
         element: (
           <PrivateRouter>
             <UpdateAssignment></UpdateAssignment>
@@ -150,6 +149,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        // make this page as my own extra feature
         path: "/myCreatedAssignments",
         element: (
           <PrivateRouter>

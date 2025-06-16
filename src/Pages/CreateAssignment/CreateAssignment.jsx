@@ -6,8 +6,8 @@ import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const CreateAssignment = () => {
-  const axiosSecure = useAxiosSecure()
-  const { userEmail } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const { uid, userEmail } = useAuth();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [creating, setCreating] = useState(false);
 
@@ -48,7 +48,7 @@ const CreateAssignment = () => {
     setCreating(true);
 
     axiosSecure
-      .post("/assignments", assignment)
+      .post(`/assignments?uid=${uid}`, assignment)
       .then((res) => {
         if (res.data.insertedId) {
           toast.success("You created assignment successfully");

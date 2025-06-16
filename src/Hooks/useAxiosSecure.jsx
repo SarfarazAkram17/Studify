@@ -2,7 +2,7 @@ import axios from "axios";
 import useAuth from "./useAuth";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://assignment-11-sarfaraz-akram.vercel.app",
 });
 
 const useAxiosSecure = () => {
@@ -20,7 +20,7 @@ const useAxiosSecure = () => {
     (error) => {
       if (error.status === 401 || error.status === 403) {
         logOutUser()
-        .catch(error => console.log(error))
+        .catch(error => console.log(error.code))
       }
 
       return Promise.reject(error);
