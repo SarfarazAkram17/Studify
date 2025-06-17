@@ -9,7 +9,7 @@ const useAxiosSecure = () => {
   const { user, logOutUser } = useAuth();
 
   axiosInstance.interceptors.request.use((config) => {
-    config.headers.authorization = `Bearer ${user.accessToken}`;
+    config.headers.authorization = `Bearer ${user.accessToke}`;
     return config;
   });
 
@@ -20,7 +20,6 @@ const useAxiosSecure = () => {
     (error) => {
       if (error.status === 401 || error.status === 403) {
         logOutUser()
-        .catch(error => console.log(error.code))
       }
 
       return Promise.reject(error);

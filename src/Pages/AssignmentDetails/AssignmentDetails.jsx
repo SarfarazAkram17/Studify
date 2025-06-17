@@ -137,7 +137,6 @@ const AssignmentDetails = () => {
                 <textarea
                   name="quickNote"
                   rows="4"
-                  required
                   className="textarea textarea-bordered w-full bg-base-100 placeholder:text-xs placeholder:font-semibold"
                   placeholder={`Write Quick notes
 

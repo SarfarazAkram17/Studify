@@ -1,24 +1,65 @@
-# React + Vite
+# 🎓 Studify — Assignment Management Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Studify is a modern, full-stack, Firebase-authenticated assignment management web application built for collaborative learning. Users can **create**, **submit**, and **evaluate** assignments with secure access control, seamless UI, and responsive design.
 
-Currently, two official plugins are available:
+🌐 **Live Site**: https://assignment-11-sarfaraz-akram.netlify.app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Features Overview
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 🔐 Authentication & Security
+- Firebase Authentication (Email/Password & Google Sign-In)
+- Protected routes and secure API calls
+- UID-based resource ownership checks
 
+### 📝 Assignments
+- Create, update, and delete assignments
+- Upload thumbnail, set difficulty, due date, and total marks
+- View assignment details
+- Filter, and search assignments
 
-react icons 
-react toastify
-tailwind
-daisy ui
-react tooltip
-framer motion
-axios
-react-datepicker
-sweetalert2
-lottie-react
+### 📤 Submissions
+- Submit assignments with Google Docs links & optional notes
+- View attempted assignments with status, obtained marks, and feedback
+- One unique submission per assignment per user
+
+### ✅ Evaluation
+- Evaluate all pending submissions (excluding self-submitted)
+- Grade assignments with marks and feedback
+- Automatically updates status to "completed" after grading
+
+### 🌗 UI & UX
+- Theme toggle (Dark/Light)
+- SweetAlert confirmation modals
+- Lottie animations for loading
+- Toast notifications
+- Fully responsive on all devices
+
+---
+
+## 📦 Tech Stack
+
+| Layer      | Technology                               |
+|------------|------------------------------------------|
+| Frontend   | React, Tailwind CSS, DaisyUI             |
+| Backend    | Node.js, Express.js, MongoDB             |
+| Auth       | Firebase Authentication                  |
+| Animation  | Lottie, Framer Motion                    |
+| Deployment | Netlify (Frontend), Vercel (Backend)     |
+
+---
+
+## 📦 NPM Packages Used
+
+| Package             | Purpose                                      |
+|---------------------|----------------------------------------------|
+| Tailwindcss         | Utility-first CSS framework                  |
+| Daisyui             | Component library for Tailwind CSS           |
+| React-icons         | Use required icons                           |
+| React-toastify      | Toast notifications                          |
+| React-tooltip       | Tooltip support                              |
+| React-datepicker    | Elegant date picker UI                       |
+| Framer-motion       | Animation and transition framework           |
+| Lottie-react        | Lottie animations                            |
+| Sweetalert2         | Pop-up confirmations                         |

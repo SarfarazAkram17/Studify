@@ -111,7 +111,7 @@ const GiveAssignmentMark = () => {
             </a>
           </p>
           <div className="text-sm">
-            <strong>Quick Note(s):</strong> {quickNote.map((note, index) => <p key={index}>{note}</p>)}
+            <strong>Quick Note(s):</strong> {quickNote ? quickNote.map((note, index) => <p key={index}>{note}</p>) : "No quick note given" }
           </div>
 
           <form onSubmit={handleGiveMarks} className="space-y-4 px-4 md:px-8">
