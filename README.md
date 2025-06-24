@@ -63,3 +63,7 @@ Studify is a modern, full-stack, Firebase-authenticated assignment management we
 | Framer-motion       | 12.16.0    | Animation and transition framework           |
 | Lottie-react        | 2.4.1      | Lottie animations                            |
 | Sweetalert2         | 11.22.0    | Pop-up confirmations                         |
+
+# 🛠️ Getting Started 
+git clone https://github.com/SarfarazAkram17/Studify.git
+cd Studify
