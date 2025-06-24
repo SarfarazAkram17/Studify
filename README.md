@@ -65,5 +65,6 @@ Studify is a modern, full-stack, Firebase-authenticated assignment management we
 | Sweetalert2         | 11.22.0    | Pop-up confirmations                         |
 
 # 🛠️ Getting Started 
-git clone https://github.com/SarfarazAkram17/Studify.git
+
+git clone https://github.com/SarfarazAkram17/Studify.git <br />
 cd Studify
